@@ -1,16 +1,60 @@
+require("dotenv").config();
+
 // Send mobile notification
 const sendMobileNotification = async (mobileNumber, amount) => {
-  // Implement the logic to send a mobile notification
-  // You may use a third-party SMS service or any other notification service
+  /// Implementing the logic to send a mobile notification using a third-party SMS service
+  // Here, I am using the Twilio SMS API as an example
+
+  const client = require("twilio")(accountSid, authToken);
+
+  const accountSid = process.env.TWILLO_ACCOUNT_SID;
+  const authToken = process.env.TWILLO_AUTH_TOKEN;
+  const twilioPhoneNumber = process.env.TWILLO_PHONE_NUMBER;
+
+  const msg = await client.messages.create({
+    body: `Insufficient funds for deposit of ${amount}`,
+    from: twilioPhoneNumber,
+    to: mobileNumber,
+  });
+  if (!msg) {
+    throw new Error("Failed to send mobile notification");
+  }
   console.log(
-    `Sending mobile notification to ${mobileNumber}: Insufficient funds for deposit of ${amount}`
+    `Mobile notification sent to ${mobileNumber}: Insufficient funds for deposit of ${amount}`
   );
+  return msg;
 };
 
 // Send email notification
-const sendEmailNotification = (email, amount) => {
-  // Implement the logic to send an email notification
-  // You may use a third-party email service or any other notification service
+const sendEmailNotification = async (email, amount) => {
+  // Implementing the logic to send an email notification
+  // we may use a third-party email service or any other notification service.
+  // I am using sendGrid for this functionality
+
+  const api_key = proces.env.SENDGRID_API_KEY;
+  const senderMail = process.env.SENDGRID_EMAIL;
+
+  const mail = await axios.post(
+    "https://api.sendgrid.com/v3/mail/send",
+    {
+      personalizations: [{ to: [{ email }] }],
+      from: { email: senderEmail },
+      subject: "Automated Deposit Failure",
+      content: [
+        {
+          type: "text/plain",
+          value: `Insufficient funds for deposit of ${amount}`,
+        },
+      ],
+    },
+    {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    }
+  );
+
+  if (!mail) throw new Error("Failed to send email notification");
+  return mail;
+
   console.log(
     `Sending email notification to ${email}: Insufficient funds for deposit of ${amount}`
   );
