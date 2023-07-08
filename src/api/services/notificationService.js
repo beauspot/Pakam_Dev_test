@@ -38,7 +38,7 @@ const sendEmailNotification = async (email, amount) => {
     "https://api.sendgrid.com/v3/mail/send",
     {
       personalizations: [{ to: [{ email }] }],
-      from: { email: senderEmail },
+      from: { email: senderMail },
       subject: "Automated Deposit Failure",
       content: [
         {
@@ -48,7 +48,7 @@ const sendEmailNotification = async (email, amount) => {
       ],
     },
     {
-      headers: { Authorization: `Bearer ${apiKey}` },
+      headers: { Authorization: `Bearer ${api_key}` },
     }
   );
 
