@@ -53,11 +53,11 @@ const sendEmailNotification = async (email, amount) => {
   );
 
   if (!mail) throw new Error("Failed to send email notification");
-  return mail;
 
   console.log(
     `Sending email notification to ${email}: Insufficient funds for deposit of ${amount}`
   );
+  return mail;
 };
 
 module.exports = { sendMobileNotification, sendEmailNotification };
