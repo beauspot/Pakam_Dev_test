@@ -1,6 +1,8 @@
-const express = require("express");
-const axios = require("axios");
 require("express-async-errors");
+const express = require("express");
+
+// Error Middlware
+const errMidd = require("./middleware/errHandlerMiddleware");
 
 const server = express();
 
@@ -12,6 +14,7 @@ const notificationRoute = require("./routes/appRoute");
 
 server.use("/api/v1/notifyuser", notificationRoute);
 
+server.use(errMidd.errMiddleware);
 const port = 4130;
 
 server.listen(port, (err) => {
