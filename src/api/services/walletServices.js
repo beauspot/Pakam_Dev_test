@@ -1,6 +1,8 @@
-const generateDummyUsers = require("../dummyData");
+/* const generateDummyUsers = require("../dummyData");
 
-let users = generateDummyUsers();
+let users = generateDummyUsers(); */
+
+const userModel = require("../models/userModel");
 
 // Check wallet balance using User Wallet microservice
 const checkWalletBalance = async (userId, amount) => {
@@ -8,9 +10,7 @@ const checkWalletBalance = async (userId, amount) => {
   // For the sake of this example, we will use the dummy user data to get the wallet balance
 
   // Retrieve the user from the dummy data
-  const user = users.find(
-    (user) => user.id === userId || user.username === userId
-  );
+  const user = userModel.findById();
 
   if (!user) {
     throw new Error("User not found.");
