@@ -44,19 +44,19 @@ const sendEmailNotification = async (email, amount) => {
     html: "<strong>Your Balance is insuficient to carry out the transfer, Please credit to make transfer</strong>",
   };
 
+  if (!mail) throw new Error("Failed to send email notification");
+  console.log(
+    `Sending email notification to ${email}: Insufficient funds for deposit of ${amount}`
+  );
   try {
     const response = await sgMail.send(mail);
-    if (sentMail) {
+    if (response) {
       return response[0].statusCode.headers;
     }
   } catch (error) {
     return error.message;
   }
 
-  if (!mail) throw new Error("Failed to send email notification");
-  console.log(
-    `Sending email notification to ${email}: Insufficient funds for deposit of ${amount}`
-  );
   return mail;
 };
 
