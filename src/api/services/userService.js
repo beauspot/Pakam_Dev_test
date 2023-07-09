@@ -9,4 +9,11 @@ const fetchUserInformation = async (userId) => {
   return user;
 };
 
-module.exports = { fetchUserInformation };
+// Signup a user Service
+const signupuserservice = async (userdata) => {
+  const newUser = await userModel.create({ ...userdata });
+  if (!newUser) throw new Error("User canot be created");
+  return newUser;
+};
+
+module.exports = { fetchUserInformation, signupuserservice };
