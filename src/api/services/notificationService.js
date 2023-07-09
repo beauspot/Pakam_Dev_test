@@ -1,6 +1,8 @@
 require("dotenv").config();
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// const sgMail = require("@sendgrid/mail");
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+const mailer = require("../config/nodeMailer");
 
 // Send mobile notification
 const sendMobileNotification = async (mobileNumber, amount) => {
@@ -34,30 +36,25 @@ const sendMobileNotification = async (mobileNumber, amount) => {
 const sendEmailNotification = async (email, amount) => {
   // Implementing the logic to send an email notification
   // we may use a third-party email service or any other notification service.
-  // I am using sendGrid for this functionality
+  // I am using nodemailer for this functionality
 
-  const mail = {
-    to: email,
-    from: process.env.SENDGRID_EMAIL,
-    subject: "Insuffient Funds in Wallet",
-    text: `your curent funds of ${amount} is insufient for depositing your wallet`,
-    html: "<strong>Your Balance is insuficient to carry out the transfer, Please credit to make transfer</strong>",
-  };
-
-  if (!mail) throw new Error("Failed to send email notification");
   console.log(
     `Sending email notification to ${email}: Insufficient funds for deposit of ${amount}`
   );
+  const text = `Your current funds of ${amount} are insufficient for depositing into your wallet`;
   try {
-    const response = await sgMail.send(mail);
-    if (response) {
-      return response[0].statusCode.headers;
-    }
+    // Send the email
+    const message = await mailer(email, "Insufficient Funds in Wallet", text);
+    console.log(
+      `Email notification sent to ${email}: Insufficient funds for deposit of ${amount}`
+    );
+    return message;
   } catch (error) {
-    return error.message;
+    console.error("Failed to send email notification:", error);
+    throw new Error("Failed to send email notification");
   }
 
-  return mail;
+  //return mail;
 };
 
 module.exports = { sendMobileNotification, sendEmailNotification };
