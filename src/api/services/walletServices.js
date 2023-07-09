@@ -1,5 +1,3 @@
-
-
 const userModel = require("../models/userModel");
 
 // Check wallet balance using User Wallet microservice
