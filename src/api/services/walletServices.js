@@ -1,6 +1,4 @@
-/* const generateDummyUsers = require("../dummyData");
 
-let users = generateDummyUsers(); */
 
 const userModel = require("../models/userModel");
 
@@ -10,7 +8,7 @@ const checkWalletBalance = async (userId, amount) => {
   // For the sake of this example, we will use the dummy user data to get the wallet balance
 
   // Retrieve the user from the dummy data
-  const user = userModel.findById();
+  const user = userModel.findById(userId);
 
   if (!user) {
     throw new Error("User not found.");
