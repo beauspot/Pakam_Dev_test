@@ -37,6 +37,6 @@ you have the option of altering the the "notificationType" to either an "email" 
 
 this would enable the notification to be sent either by using an email address that is valid or a phone number that is valid. 
 
-note:  This feature was achieved with the use of nodemailer(dependency for sending mail from a nodejs application) and trilio (another dependency for sending text messages).
+note:  This feature was achieved with the use of nodemailer(dependency for sending mail from a nodejs application) and trilio (another dependency for sending text messages) and you must be connected to the internet for it to work properly.
 
 Warm Regards.
