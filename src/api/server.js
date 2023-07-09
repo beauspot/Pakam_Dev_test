@@ -17,13 +17,16 @@ server.use(express.urlencoded({ extended: true }));
 
 // importing the routes
 const notificationRoute = require("./routes/appRoute");
+const userSignupRoute = require("./routes/userRoute");
 
 server.get("/", (req, res) =>
   res
     .status(StatusCodes.OK)
     .json({ message: "Welcome to the notification api" })
 );
+
 server.use("/api/v1/notifyuser", notificationRoute);
+server.use("/api/v1/register", userSignupRoute);
 
 server.use(errMidd.errMiddleware);
 const port = 4130;
