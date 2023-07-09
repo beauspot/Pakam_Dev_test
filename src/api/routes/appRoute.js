@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const  handleNotificationCtrl  = require("../controllers/notificationCtrl");
+const handleNotificationCtrl = require("../controllers/notificationCtrl");
 
-router.post("/notifications", handleNotificationCtrl);
+router.post("/notifications/:id", handleNotificationCtrl);
 
 module.exports = router;
