@@ -9,7 +9,6 @@
   "author": "Beau Iyere",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.7.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
