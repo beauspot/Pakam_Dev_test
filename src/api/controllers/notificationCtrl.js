@@ -7,7 +7,7 @@ const { StatusCodes } = require("http-status-codes");
 // Handle notification request
 const handleNotificationCtrl = asyncHandler(async (req, res) => {
   const { userId, amount, notificationType } = req.body;
-  // console.log(userId);
+  //console.log(userId);
 
   // Fetch user information
   const user = await userService.fetchUserInformation(userId);
@@ -32,7 +32,7 @@ const handleNotificationCtrl = asyncHandler(async (req, res) => {
     }
   }
 
-  res.sendStatus(StatusCodes.OK).json({ message: `Message Sent Successfully` });
+  return res.status(StatusCodes.OK).json({ message: `Message Sent Successfully` });
 });
 
 module.exports = handleNotificationCtrl;
