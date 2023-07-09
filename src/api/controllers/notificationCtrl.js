@@ -2,13 +2,17 @@ const userService = require("../services/userService");
 const walletService = require("../services/walletServices");
 const notificationService = require("../services/notificationService");
 const asyncHandler = require("express-async-handler");
+const { StatusCodes } = require("http-status-codes");
 
 // Handle notification request
 const handleNotificationCtrl = asyncHandler(async (req, res) => {
   const { userId, amount, notificationType } = req.body;
+  // console.log(userId);
 
   // Fetch user information
   const user = await userService.fetchUserInformation(userId);
+  // console.log(user.mobile);
+  // console.log(user);
 
   // Check wallet balance
   const hasSufficientFunds = await walletService.checkWalletBalance(
@@ -19,10 +23,8 @@ const handleNotificationCtrl = asyncHandler(async (req, res) => {
   if (!hasSufficientFunds) {
     // Send notification
     if (notificationType === "mobile") {
-      await notificationService.sendMobileNotification(
-        user.mobileNumber,
-        amount
-      );
+      console.log(user.mobile);
+      await notificationService.sendMobileNotification(user.mobile, amount);
     } else if (notificationType === "email") {
       notificationService.sendEmailNotification(user.email, amount);
     } else {
@@ -30,7 +32,7 @@ const handleNotificationCtrl = asyncHandler(async (req, res) => {
     }
   }
 
-  res.sendStatus(200);
+  res.sendStatus(StatusCodes.OK).json({ message: `Message Sent Successfully` });
 });
 
 module.exports = handleNotificationCtrl;
